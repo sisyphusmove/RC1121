@@ -1,0 +1,36 @@
+{% extends 'index_base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}RC Coin{% endblock title %}
+
+{% block content %}
+{% block extrastyle %}{% static "photo/photo.css" %}{% endblock %}
+
+<section id='newsletter'>
+<div id="content" align="center">
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <br>
+        <button type="submit" class="btn btn-default">검색</button>
+
+    </form>
+
+    <br><br>
+
+    {% if object_list %}
+        {% for post in object_list %}
+            <h2><a href="{{post.get_absolute_url}}">{{ post.title }}</a></h2>
+            <p>{{ post.description }}</p>
+            <p><img src="{{post.image.url}}"></p>
+        {% endfor %}
+    {% elif search_term %}
+        <b><i>Search Word({{ search_term }}) 가맹점을 찾지 못했습니다.</i></b>
+    {% endif %}
+
+
+</div>
+</section>
+{% endblock content %}
